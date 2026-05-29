@@ -2,6 +2,7 @@ package com.projectjava.felps.services;
 
 import com.projectjava.felps.entities.User;
 import com.projectjava.felps.repositories.UserRepository;
+import com.projectjava.felps.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,7 +22,7 @@ public class UserService {
 
     public User findById(long id){
         Optional<User> obj = repository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insert (User obj){
